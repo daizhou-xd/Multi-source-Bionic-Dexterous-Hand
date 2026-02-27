@@ -1,0 +1,12 @@
+name: bionic-hand
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - PySide6>=6.5.0
+    - matplotlib>=3.7.0
+    - cadquery>=2.3.0
+    - numpy<2.0

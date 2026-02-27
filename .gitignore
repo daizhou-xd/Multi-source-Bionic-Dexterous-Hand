@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment (venv/virtualenv)
+venv/
+ENV/
+env/
+.venv
+
+# Conda Environment
+.conda/
+conda-meta/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+design_software/exports/
+design_software/*.stl
+design_software/*.step
+design_software/*.xml
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/.ropeproject
+
+# Backup files
+*.bak
+*.backup
+*_old.py
