@@ -95,7 +95,7 @@ class ToggleSwitch(QWidget):
         self._checked = checked
         self._on_color = on_color
         self._off_color = off_color
-        self.setCursor(Qt.PointingHandCursor)
+        self.setCursor(Qt.PointingHandCursor) # type: ignore
 
     def isChecked(self) -> bool:
         return self._checked
@@ -113,10 +113,10 @@ class ToggleSwitch(QWidget):
         from PySide6.QtGui import QPainter, QColor
 
         p = QPainter(self)
-        p.setRenderHint(QPainter.Antialiasing)
+        p.setRenderHint(QPainter.Antialiasing) # type: ignore
         bg = QColor(self._on_color) if self._checked else QColor(self._off_color)
         p.setBrush(bg)
-        p.setPen(Qt.NoPen)
+        p.setPen(Qt.NoPen) # type: ignore
         p.drawRoundedRect(0, 0, self.width(), self.height(), 12, 12)
         knob_x = self.width() - 22 if self._checked else 2
         p.setBrush(QColor("#f8f9fb"))
@@ -320,10 +320,10 @@ class MainWindow(QMainWindow):
         left_panel_layout.setContentsMargins(0, 0, 0, 0)
         left_panel_layout.setSpacing(6)
         left_title = QLabel("2D 草图")
-        left_title.setAlignment(Qt.AlignHCenter)
+        left_title.setAlignment(Qt.AlignHCenter) # type: ignore
         left_title.setStyleSheet("font-weight:600; color:#555;")
         left_panel_layout.addWidget(left_title)
-        left_split = QSplitter(Qt.Vertical)
+        left_split = QSplitter(Qt.Vertical) # type: ignore
         left_split.setOpaqueResize(False)
         left_split.setChildrenCollapsible(False)
 
@@ -372,7 +372,7 @@ class MainWindow(QMainWindow):
         # Controls
         panel = QWidget()
         panel_layout = QVBoxLayout(panel)
-        panel_layout.setAlignment(Qt.AlignTop)
+        panel_layout.setAlignment(Qt.AlignTop) # type: ignore
         panel_layout.setSpacing(10)
 
         self._param_label_width = 120
@@ -595,7 +595,7 @@ class MainWindow(QMainWindow):
         scroll.setWidgetResizable(True)
 
         panel_title = QLabel("参数")
-        panel_title.setAlignment(Qt.AlignHCenter)
+        panel_title.setAlignment(Qt.AlignHCenter) # type: ignore
         panel_title.setStyleSheet("font-weight:600; color:#555;")
         panel_wrap = QWidget()
         panel_wrap_layout = QVBoxLayout(panel_wrap)
@@ -604,7 +604,7 @@ class MainWindow(QMainWindow):
         panel_wrap_layout.addWidget(panel_title)
         panel_wrap_layout.addWidget(scroll, 1)
 
-        self.main_split = QSplitter(Qt.Horizontal)
+        self.main_split = QSplitter(Qt.Horizontal) # type: ignore
         self.main_split.setOpaqueResize(False)
         self.main_split.setChildrenCollapsible(False)
         self.main_split.addWidget(left_panel)
@@ -731,7 +731,7 @@ class MainWindow(QMainWindow):
         box.setValue(value)
         box.setFixedWidth(self._param_spin_width)
 
-        slider = QSlider(Qt.Horizontal)
+        slider = QSlider(Qt.Horizontal) # type: ignore
         slider.setFixedWidth(self._param_slider_width)
         slider.setRange(int(vmin * scale), int(vmax * scale))
         slider.setSingleStep(max(1, int(step * scale)))
@@ -742,7 +742,7 @@ class MainWindow(QMainWindow):
 
         label_text = label if not unit else f"{label} {unit}"
         label_widget = QLabel(label_text)
-        label_widget.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        label_widget.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter) # type: ignore
         label_widget.setFixedWidth(self._param_label_width)
 
         grid.addWidget(label_widget, row, 0)
@@ -767,7 +767,7 @@ class MainWindow(QMainWindow):
         box.setValue(value)
         box.setFixedWidth(self._param_spin_width)
 
-        slider = QSlider(Qt.Horizontal)
+        slider = QSlider(Qt.Horizontal) # type: ignore
         slider.setFixedWidth(self._param_slider_width)
         slider.setRange(vmin, vmax)
         slider.setSingleStep(1)
@@ -778,7 +778,7 @@ class MainWindow(QMainWindow):
 
         label_text = label if not unit else f"{label} {unit}"
         label_widget = QLabel(label_text)
-        label_widget.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        label_widget.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter) # type: ignore
         label_widget.setFixedWidth(self._param_label_width)
 
         grid.addWidget(label_widget, row, 0)
@@ -824,7 +824,7 @@ class MainWindow(QMainWindow):
         self.cone1_spin.setValue(defaults.cone_angle1)
         self.cone1_slider.setValue(int(defaults.cone_angle1 * 10))
         self.update_2d()
-        self.update_scene()
+        self.update_scene() # type: ignore
 
     def update_2d(self) -> None:
         self.params.a = float(self.a_spin.value())
@@ -1122,7 +1122,7 @@ class MainWindow(QMainWindow):
         turns: float,
     ) -> None:
         ax.clear()
-        ax.set_title("螺旋机器人设计")
+        ax.set_title("螺旋触手设计")
 
         ax.plot(theta_vals, r_vals, color="#1f77b4", linewidth=2.0)
         rc_end = max(0.0, 2.0 * math.pi * turns - 2.0 * math.pi)
@@ -1245,21 +1245,21 @@ class MainWindow(QMainWindow):
         self.cart_fig.savefig(cart_path, dpi=200)
         # Prefer VTK capture to avoid black OpenGL grabs
         try:
-            self.vtk_widget.GetRenderWindow().Render()
-            w2i = vtkWindowToImageFilter()
-            w2i.SetInput(self.vtk_widget.GetRenderWindow())
+            self.vtk_widget.GetRenderWindow().Render() # type: ignore
+            w2i = vtkWindowToImageFilter() # type: ignore
+            w2i.SetInput(self.vtk_widget.GetRenderWindow()) # type: ignore
             w2i.ReadFrontBufferOn()
             w2i.Update()
-            writer = vtkPNGWriter()
+            writer = vtkPNGWriter() # type: ignore
             writer.SetFileName(preview_path)
             writer.SetInputConnection(w2i.GetOutputPort())
             writer.Write()
         except Exception:
-            grab = self.vtk_widget.grab()
+            grab = self.vtk_widget.grab() # type: ignore
             grab.save(preview_path, "PNG")
 
-        printer = QPrinter(QPrinter.HighResolution)
-        printer.setOutputFormat(QPrinter.PdfFormat)
+        printer = QPrinter(QPrinter.HighResolution) # type: ignore
+        printer.setOutputFormat(QPrinter.PdfFormat) # type: ignore
         printer.setOutputFileName(window_pdf)
         printer.setPageMargins(QMarginsF(8, 8, 8, 8))
         painter = QPainter(printer)
@@ -1268,7 +1268,7 @@ class MainWindow(QMainWindow):
             source = self.frameGeometry()
             source.moveTo(0, 0)
             scaled = source.size()
-            scaled.scale(target.size(), Qt.KeepAspectRatio)
+            scaled.scale(target.size(), Qt.KeepAspectRatio) # type: ignore
             painter.setViewport(target.x(), target.y(), scaled.width(), scaled.height())
             painter.setWindow(source)
             self.render(painter, QPoint(0, 0))
@@ -1376,7 +1376,7 @@ class MainWindow(QMainWindow):
             if self._robot_length > 1e-6 and cone1 > 1e-6:
                 alpha = -math.radians(cone1 * 0.5)
                 try:
-                    base_x = solid.val().BoundingBox().xmax
+                    base_x = solid.val().BoundingBox().xmax # type: ignore
                 except Exception:
                     base_x = self._robot_length
                 half_z = thickness * 0.5
@@ -1423,7 +1423,7 @@ class MainWindow(QMainWindow):
 
         stl_name = "baselink.stl"
         stl_path = os.path.join(xml_dir, stl_name)
-        cq.exporters.export(solid.val(), stl_path)
+        cq.exporters.export(solid.val(), stl_path) # type: ignore
 
         xml_path = os.path.join(xml_dir, "robot.xml")
         # compute unit height from rightmost quad (x-axis segment)
@@ -1513,10 +1513,10 @@ class MainWindow(QMainWindow):
         solids = [main_solid.val()]
         if elastic_solid is not None:
             solids.append(elastic_solid.val())
-        step_compound = cq.Compound.makeCompound(solids)
+        step_compound = cq.Compound.makeCompound(solids) # type: ignore
         cq.exporters.export(step_compound, step_path)
         merged = main_solid if elastic_solid is None else main_solid.union(elastic_solid)
-        cq.exporters.export(merged.val(), stl_path)
+        cq.exporters.export(merged.val(), stl_path) # type: ignore
 
     def _build_cad_parts(self):
         try:
@@ -1547,7 +1547,7 @@ class MainWindow(QMainWindow):
                 alpha = -math.radians(cone1 * 0.5)
                 # Use actual model bounds for base_x to avoid offset errors
                 try:
-                    base_x = main.val().BoundingBox().xmax
+                    base_x = main.val().BoundingBox().xmax # type: ignore
                 except Exception:
                     base_x = self._robot_length
                 half_z = thickness * 0.5
@@ -1620,7 +1620,7 @@ class MainWindow(QMainWindow):
                 inst = frustum if ang == 0.0 else frustum.rotate((0, 0, 0), (1, 0, 0), ang)
                 holes = inst if holes is None else holes.union(inst)
             if holes is not None:
-                solid = solid.cut(holes)
+                solid = solid.cut(holes) # type: ignore
         return (solid, None)
 
 
